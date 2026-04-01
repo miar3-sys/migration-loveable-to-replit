@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IlliniXchange Migration Planner</title>
+    <style>
+        :root {
+            --illini-blue: #13294B;
+            --illini-orange: #E84A27;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--illini-blue);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--illini-blue);
+        }
+
+        .tab-btn.active {
+            color: var(--illini-orange);
+            border-bottom-color: var(--illini-orange);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            color: var(--illini-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        /* Architecture Diagram */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .arch-box {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .arch-node {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 0.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            font-weight: 500;
+        }
+
+        .arch-arrow {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: var(--illini-blue);
+        }
+
+        /* Cost Toggle */
+        .cost-toggles {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+
+        .cost-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border-color);
+            background: white;
+            border-radius: 99px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .cost-btn.active {
+            background: var(--illini-blue);
+            color: white;
+            border-color: var(--illini-blue);
+        }
+
+        .cost-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--illini-orange);
+            margin: 1rem 0;
+        }
+
+        .price-detail {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            list-style: none;
+            padding: 0;
+        }
+
+        .price-detail li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style-type: none;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--illini-orange);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .badge.low { background: #dcfce7; color: #166534; }
+        .badge.medium { background: #fef9c3; color: #854d0e; }
+        .badge.high { background: #fee2e2; color: #991b1b; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>IlliniXchange Migration Planner</h1>
+        <p class="subtitle">Evaluating the move from Lovable + Supabase to Replit for our student trading app</p>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('architecture')">Architecture & Services</button>
+        <button class="tab-btn" onclick="openTab('costs')">Cost Comparison</button>
+        <button class="tab-btn" onclick="openTab('migration')">Migration & Lock-in</button>
+        <button class="tab-btn" onclick="openTab('risks')">Risk Summary</button>
+    </div>
+
+    <!-- Architecture & Services Tab -->
+    <div id="architecture" class="tab-content active">
+        <div class="card">
+            <h2>How the App is Built</h2>
+            <p style="margin-bottom: 1.5rem;">IlliniXchange is currently in its early stages. Here is how the pieces fit together now, versus how they would look on Replit.</p>
+            
+            <div class="arch-grid">
+                <div class="arch-box">
+                    <h3>Current Stack</h3>
+                    <div class="arch-node" style="border-left: 4px solid var(--illini-orange);">
+                        <strong>Lovable</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Builds the User Interface (React)</span>
+                    </div>
+                    <div class="arch-arrow">↕</div>
+                    <div class="arch-node" style="border-left: 4px solid #10b981;">
+                        <strong>Supabase</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Database & @illinois.edu Logins</span>
+                    </div>
+                    <div class="arch-arrow">↕</div>
+                    <div class="arch-node" style="border-left: 4px solid #3b82f6;">
+                        <strong>Google AI Studio</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Smart features & extra logic</span>
+                    </div>
+                </div>
+
+                <div class="arch-box">
+                    <h3>Replit Alternative</h3>
+                    <div class="arch-node" style="border-left: 4px solid var(--illini-orange);">
+                        <strong>Replit Workspace</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Hosts the UI & Backend Code together</span>
+                    </div>
+                    <div class="arch-arrow">↕</div>
+                    <div class="arch-node" style="border-left: 4px solid #10b981;">
+                        <strong>Replit DB (Neon)</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Built-in Database</span>
+                    </div>
+                    <div class="arch-arrow">↕</div>
+                    <div class="arch-node" style="border-left: 4px solid #3b82f6;">
+                        <strong>Google AI Studio</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Still used via API</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Service Classification</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>App Feature</th>
+                        <th>Current Tool</th>
+                        <th>Replit Equivalent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>User Interface (UI)</strong><br><span style="font-size: 0.85rem; color: var(--text-muted);">Buttons, layout, tabs</span></td>
+                        <td>Lovable (Visual Builder)</td>
+                        <td>Replit (Manual coding or Replit AI)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Database</strong><br><span style="font-size: 0.85rem; color: var(--text-muted);">Storing items, profiles</span></td>
+                        <td>Supabase (PostgreSQL)</td>
+                        <td>Replit DB (Managed PostgreSQL)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Authentication</strong><br><span style="font-size: 0.85rem; color: var(--text-muted);">Google @illinois.edu login</span></td>
+                        <td>Supabase Auth</td>
+                        <td>Custom code (e.g., Auth.js) hosted on Replit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hosting</strong><br><span style="font-size: 0.85rem; color: var(--text-muted);">Keeping the app online</span></td>
+                        <td>Lovable / Vercel</td>
+                        <td>Replit Deployments</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Costs Tab -->
+    <div id="costs" class="tab-content">
+        <div class="card">
+            <h2>Estimated Monthly Costs</h2>
+            <p style="margin-bottom: 1.5rem;">Select how many students are actively using IlliniXchange to see how costs compare. <em>Note: Since the app is not fully production-ready, we assume free tiers where possible for low usage.</em></p>
+
+            <div class="cost-toggles">
+                <button class="cost-btn active" onclick="setUsers(100, this)">100 Users (Testing)</button>
+                <button class="cost-btn" onclick="setUsers(1000, this)">1,000 Users (Growing)</button>
+                <button class="cost-btn" onclick="setUsers(10000, this)">10,000 Users (Campus-wide)</button>
+            </div>
+
+            <div class="cost-display">
+                <div class="arch-box">
+                    <h3>Current Stack</h3>
+                    <div class="price-tag" id="current-price">$0</div>
+                    <ul class="price-detail" id="current-details">
+                        <li>Lovable: Free tier</li>
+                        <li>Supabase: Free tier</li>
+                        <li>Google AI Studio: Free tier</li>
+                    </ul>
+                </div>
+                <div class="arch-box">
+                    <h3>Replit</h3>
+                    <div class="price-tag" id="replit-price">$15</div>
+                    <ul class="price-detail" id="replit-details">
+                        <li>Replit Core: $15/mo</li>
+                        <li>Deployment: Included in Core</li>
+                        <li>Database: Included in Core</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Migration & Lock-in Tab -->
+    <div id="migration" class="tab-content">
+        <div class="card">
+            <h2>Migration Assessment</h2>
+            <p style="margin-bottom: 1rem;">Moving from Lovable + Supabase to Replit involves a few manual steps since the app is still an early prototype.</p>
+            <ul class="feature-list">
+                <li><strong>Export Code:</strong> Download the React code generated by Lovable.</li>
+                <li><strong>Export Data:</strong> Run a SQL export (<code>supabase-schema.sql</code>) from Supabase to get the database structure and any superficial data.</li>
+                <li><strong>Setup Replit:</strong> Create a new Replit project, upload the React code, and set up a Replit Postgres database.</li>
+                <li><strong>Rewrite Auth:</strong> Supabase handles the @illinois.edu Google login automatically. On Replit, we will need to write custom backend code (like Auth.js or Passport.js) to handle Google logins.</li>
+                <li><strong>Update Connections:</strong> Change the database connection strings in the code to point to Replit DB instead of Supabase.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Vendor Lock-in Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Current Stack Lock-in</th>
+                        <th>Replit Lock-in</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Codebase</strong></td>
+                        <td><span class="badge low">Low</span> Lovable exports standard React code. You own it.</td>
+                        <td><span class="badge low">Low</span> You can download your code from Replit anytime.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Database</strong></td>
+                        <td><span class="badge low">Low</span> Supabase is standard Postgres. Easy to export.</td>
+                        <td><span class="badge medium">Medium</span> Replit Postgres is standard, but tied to their billing ecosystem.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Authentication</strong></td>
+                        <td><span class="badge medium">Medium</span> Supabase Auth is great, but moving users to a new auth provider later takes work.</td>
+                        <td><span class="badge low">Low</span> If you write custom auth code on Replit, you own the logic completely.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Risks Tab -->
+    <div id="risks" class="tab-content">
+        <div class="card">
+            <h2>Risk Summary</h2>
+            <p style="margin-bottom: 1rem;">Before migrating IlliniXchange to Replit, consider these potential risks:</p>
+            
+            <ul class="feature-list">
+                <li>
+                    <strong>Loss of Visual Builder</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Lovable allows for rapid UI building without writing much code. Moving to Replit means all future UI updates (like adding new tabs or changing the profile page) must be coded manually or generated via text prompts, which might slow down design tweaks.</p>
+                </li>
+                <li>
+                    <strong>Authentication Complexity</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Supabase makes restricting logins to "@illinois.edu" very easy. Rebuilding this securely from scratch on Replit requires careful backend coding to ensure non-students can't access the trading platform.</p>
+                </li>
+                <li>
+                    <strong>All-in-One Dependency</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Currently, if Lovable goes down, the database (Supabase) is still safe. If Replit goes down, the code editor, the hosting, and the database all go down at the same time.</p>
+                </li>
+                <li>
+                    <strong>Scaling Costs</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">While Replit is cheap to start, scaling a unified server for thousands of UIUC students can become more expensive than Supabase's generous free/low-cost tiers for database-heavy apps.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Tab Switching Logic
+    function openTab(tabId) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        // Remove active class from buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Show selected tab
+        document.getElementById(tabId).classList.add('active');
+        // Highlight clicked button
+        event.currentTarget.classList.add('active');
+    }
+
+    // Cost Calculator Logic
+    const costData = {
+        100: {
+            current: { price: "$0", details: ["Lovable: Free tier", "Supabase: Free tier", "Google AI Studio: Free tier"] },
+            replit: { price: "$15", details: ["Replit Core: $15/mo", "Deployment: Included in Core", "Database: Included in Core"] }
+        },
+        1000: {
+            current: { price: "$0 - $20", details: ["Lovable/Vercel: Free or $20/mo", "Supabase: Free tier", "Google AI Studio: Free tier"] },
+            replit: { price: "$21", details: ["Replit Core: $15/mo", "Basic Deployment: ~$6/mo", "Database: Included"] }
+        },
+        10000: {
+            current: { price: "$45", details: ["Frontend Hosting: ~$20/mo", "Supabase Pro: $25/mo", "Google AI Studio: Free tier"] },
+            replit: { price: "$45+", details: ["Replit Core: $15/mo", "Scaled Deployment: ~$30/mo", "Database: Usage based"] }
+        }
+    };
+
+    function setUsers(users, btnElement) {
+        // Update active button state
+        document.querySelectorAll('.cost-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        btnElement.classList.add('active');
+
+        // Update UI
+        const data = costData[users];
+        
+        document.getElementById('current-price').innerText = data.current.price;
+        document.getElementById('current-details').innerHTML = data.current.details.map(d => `<li>${d}</li>`).join('');
+        
+        document.getElementById('replit-price').innerText = data.replit.price;
+        document.getElementById('replit-details').innerHTML = data.replit.details.map(d => `<li>${d}</li>`).join('');
+    }
+</script>
+
+</body>
+</html>
