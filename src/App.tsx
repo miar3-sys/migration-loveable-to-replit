@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { ArrowRight, Database, Server, Layout, Code, Cloud, Lock, Unlock, Zap, ShieldCheck, Cpu, GraduationCap } from 'lucide-react';
+import { ArrowRight, ArrowDown, Database, Server, Layout, Code, Cloud, Lock, Unlock, Zap, ShieldCheck, Cpu, GraduationCap } from 'lucide-react';
 
 export default function MigrationPlanner() {
   const [mau, setMau] = useState<number[]>([10000]);
@@ -85,17 +85,17 @@ export default function MigrationPlanner() {
   const chartData = generateChartData();
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans flex flex-col selection:bg-[#E84A27] selection:text-white">
       {/* University Header */}
-      <header className="bg-[#13294B] text-white py-4 px-6 md:px-8 border-b-4 border-[#E84A27] shadow-md">
+      <header className="bg-slate-900 text-white py-4 px-6 md:px-8 border-b-2 border-[#E84A27] shadow-md">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="bg-[#E84A27] text-white font-serif font-bold text-3xl w-12 h-12 flex items-center justify-center rounded-sm shadow-inner">
               I
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-bold tracking-wider uppercase">University of Illinois</h1>
-              <p className="text-xs md:text-sm text-blue-200 uppercase tracking-widest flex items-center gap-1">
+              <h1 className="text-xl md:text-2xl font-bold tracking-wider uppercase text-slate-100">University of Illinois</h1>
+              <p className="text-xs md:text-sm text-blue-400 uppercase tracking-widest flex items-center gap-1">
                 <GraduationCap className="w-3 h-3" />
                 Migration Planning Portal
               </p>
@@ -107,17 +107,17 @@ export default function MigrationPlanner() {
       <main className="flex-1 p-4 md:p-8">
         <div className="max-w-6xl mx-auto space-y-8">
           
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900 p-6 rounded-lg shadow-sm border border-slate-800">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight text-[#13294B]">IlliniXchange Stack Analysis</h2>
-              <p className="text-slate-500 mt-1">Compare Lovable + Supabase vs Replit for the student trading application.</p>
+              <h2 className="text-3xl font-bold tracking-tight text-slate-100">IlliniXchange Stack Analysis</h2>
+              <p className="text-slate-400 mt-1">Compare Lovable + Supabase vs Replit for the student trading application.</p>
             </div>
             <div className="flex gap-2">
-              <Badge variant="outline" className="bg-white px-3 py-1 text-sm border-[#13294B]/20 text-[#13294B] shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-[#13294B] mr-2 inline-block"></span>
+              <Badge variant="outline" className="bg-slate-800 px-3 py-1 text-sm border-blue-500/30 text-blue-400 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-blue-500 mr-2 inline-block"></span>
                 Lovable + Supabase
               </Badge>
-              <Badge variant="outline" className="bg-white px-3 py-1 text-sm border-[#E84A27]/20 text-[#E84A27] shadow-sm">
+              <Badge variant="outline" className="bg-slate-800 px-3 py-1 text-sm border-[#E84A27]/30 text-[#E84A27] shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#E84A27] mr-2 inline-block"></span>
                 Replit
               </Badge>
@@ -125,76 +125,59 @@ export default function MigrationPlanner() {
           </div>
 
         <Tabs defaultValue="architecture" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
-            <TabsTrigger value="architecture">Architecture</TabsTrigger>
-            <TabsTrigger value="cost">Cost Calculator</TabsTrigger>
-            <TabsTrigger value="lockin">Lock-in Analysis</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 mb-8 bg-slate-900 border border-slate-800">
+            <TabsTrigger value="architecture" className="data-[state=active]:bg-slate-800 data-[state=active]:text-slate-100">Architecture & Comparison</TabsTrigger>
+            <TabsTrigger value="cost" className="data-[state=active]:bg-slate-800 data-[state=active]:text-slate-100">Cost Calculator</TabsTrigger>
           </TabsList>
 
-          {/* ARCHITECTURE TAB */}
-          <TabsContent value="architecture" className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
+          {/* ARCHITECTURE & COMPARISON TAB */}
+          <TabsContent value="architecture" className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-8">
               
               {/* Lovable + Supabase Architecture */}
-              <Card className="border-[#13294B]/20 shadow-sm">
-                <CardHeader className="bg-[#13294B]/5 border-b border-[#13294B]/10 pb-4">
-                  <CardTitle className="flex items-center gap-2 text-[#13294B]">
+              <Card className="bg-slate-900 border-blue-500/20 shadow-sm">
+                <CardHeader className="bg-blue-950/30 border-b border-blue-500/10 pb-4">
+                  <CardTitle className="flex items-center gap-2 text-blue-400">
                     <Layout className="w-5 h-5" />
                     Lovable + Supabase
                   </CardTitle>
-                  <CardDescription>Decoupled frontend and backend architecture</CardDescription>
+                  <CardDescription className="text-slate-400">Decoupled frontend and backend</CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
-                  <div className="space-y-6">
+                  <div className="flex flex-col items-center gap-3">
                     {/* Frontend */}
-                    <div className="bg-white border border-slate-200 rounded-lg p-4 shadow-sm relative">
-                      <div className="absolute -top-3 left-4 bg-white px-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Frontend (Vercel/Netlify)</div>
-                      <div className="flex items-center gap-3 mt-2">
-                        <div className="p-2 bg-blue-50 text-blue-600 rounded-md">
-                          <Code className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-slate-900">React + Vite + Tailwind</p>
-                          <p className="text-sm text-slate-500">Generated by Lovable, fully owned code</p>
-                        </div>
+                    <div className="w-full bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                      <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Frontend</div>
+                      <Code className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                      <p className="font-medium text-slate-200">React + Vite + Tailwind</p>
+                      <p className="text-xs text-slate-400 mt-1">Deployed on Vercel/Netlify</p>
+                    </div>
+
+                    <ArrowDown className="w-5 h-5 text-slate-600" />
+
+                    {/* Edge */}
+                    <div className="w-full bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                      <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">API Layer</div>
+                      <Zap className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                      <p className="font-medium text-slate-200">Edge Functions (Deno)</p>
+                      <p className="text-xs text-slate-400 mt-1">Serverless business logic</p>
+                    </div>
+
+                    <ArrowDown className="w-5 h-5 text-slate-600" />
+
+                    {/* Database & Auth */}
+                    <div className="w-full grid grid-cols-2 gap-3">
+                      <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                        <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Data</div>
+                        <Database className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                        <p className="font-medium text-slate-200">PostgreSQL</p>
+                        <p className="text-xs text-slate-400 mt-1">Relational DB + RLS</p>
                       </div>
-                    </div>
-
-                    <div className="flex justify-center">
-                      <ArrowRight className="w-6 h-6 text-slate-300 rotate-90 md:rotate-0" />
-                    </div>
-
-                    {/* Backend */}
-                    <div className="bg-white border border-[#13294B]/20 rounded-lg p-4 shadow-sm relative">
-                      <div className="absolute -top-3 left-4 bg-white px-2 text-xs font-semibold text-[#13294B] uppercase tracking-wider">Backend (Supabase)</div>
-                      <div className="grid gap-3 mt-2">
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 bg-[#13294B]/10 text-[#13294B] rounded-md">
-                            <Database className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-slate-900">PostgreSQL Database</p>
-                            <p className="text-sm text-slate-500">Relational data, Row Level Security</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 bg-[#13294B]/10 text-[#13294B] rounded-md">
-                            <ShieldCheck className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-slate-900">Auth & Storage</p>
-                            <p className="text-sm text-slate-500">Built-in user management & S3 buckets</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 bg-[#13294B]/10 text-[#13294B] rounded-md">
-                            <Zap className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-slate-900">Edge Functions</p>
-                            <p className="text-sm text-slate-500">Deno-based serverless functions</p>
-                          </div>
-                        </div>
+                      <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                        <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Auth</div>
+                        <ShieldCheck className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                        <p className="font-medium text-slate-200">GoTrue Auth</p>
+                        <p className="text-xs text-slate-400 mt-1">Built-in user mgmt</p>
                       </div>
                     </div>
                   </div>
@@ -202,55 +185,49 @@ export default function MigrationPlanner() {
               </Card>
 
               {/* Replit Architecture */}
-              <Card className="border-[#E84A27]/20 shadow-sm">
-                <CardHeader className="bg-[#E84A27]/5 border-b border-[#E84A27]/10 pb-4">
+              <Card className="bg-slate-900 border-[#E84A27]/20 shadow-sm">
+                <CardHeader className="bg-[#E84A27]/10 border-b border-[#E84A27]/10 pb-4">
                   <CardTitle className="flex items-center gap-2 text-[#E84A27]">
                     <Cpu className="w-5 h-5" />
                     Replit
                   </CardTitle>
-                  <CardDescription>Integrated cloud workspace and deployment</CardDescription>
+                  <CardDescription className="text-slate-400">Integrated cloud workspace</CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
-                  <div className="space-y-6">
-                    {/* Unified Workspace */}
-                    <div className="bg-white border border-[#E84A27]/20 rounded-lg p-4 shadow-sm relative h-full">
-                      <div className="absolute -top-3 left-4 bg-white px-2 text-xs font-semibold text-[#E84A27] uppercase tracking-wider">Replit Deployment (VM / Autoscale)</div>
-                      
-                      <div className="mt-4 space-y-4">
-                        <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-md border border-slate-100">
-                          <div className="p-2 bg-[#E84A27]/10 text-[#E84A27] rounded-md">
-                            <Server className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-slate-900">Unified Server (Node/Python)</p>
-                            <p className="text-sm text-slate-500">Serves both frontend assets and API</p>
-                          </div>
-                        </div>
+                  <div className="flex flex-col items-center gap-3 h-full">
+                    {/* IDE */}
+                    <div className="w-full bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                      <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Workspace</div>
+                      <Code className="w-6 h-6 text-[#E84A27] mx-auto mb-2" />
+                      <p className="font-medium text-slate-200">Browser IDE</p>
+                      <p className="text-xs text-slate-400 mt-1">Code, build, and deploy in one place</p>
+                    </div>
 
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="flex flex-col items-center text-center gap-2 p-3 bg-slate-50 rounded-md border border-slate-100">
-                            <Database className="w-5 h-5 text-slate-600" />
-                            <div>
-                              <p className="font-medium text-sm text-slate-900">Replit DB / Neon</p>
-                              <p className="text-xs text-slate-500">Managed Postgres</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col items-center text-center gap-2 p-3 bg-slate-50 rounded-md border border-slate-100">
-                            <Cloud className="w-5 h-5 text-slate-600" />
-                            <div>
-                              <p className="font-medium text-sm text-slate-900">Object Storage</p>
-                              <p className="text-xs text-slate-500">Built-in buckets</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="mt-4 p-3 bg-blue-50/50 border border-blue-100 rounded-md flex items-start gap-3">
-                          <Code className="w-5 h-5 text-blue-500 mt-0.5" />
-                          <div>
-                            <p className="font-medium text-sm text-slate-900">Integrated IDE</p>
-                            <p className="text-xs text-slate-500">Code, build, and deploy from the browser</p>
-                          </div>
-                        </div>
+                    <ArrowDown className="w-5 h-5 text-slate-600" />
+
+                    {/* Server */}
+                    <div className="w-full bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                      <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Compute</div>
+                      <Server className="w-6 h-6 text-[#E84A27] mx-auto mb-2" />
+                      <p className="font-medium text-slate-200">Unified Server (VM)</p>
+                      <p className="text-xs text-slate-400 mt-1">Node.js/Python serves frontend & API</p>
+                    </div>
+
+                    <ArrowDown className="w-5 h-5 text-slate-600" />
+
+                    {/* Storage */}
+                    <div className="w-full grid grid-cols-2 gap-3">
+                      <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                        <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Data</div>
+                        <Database className="w-6 h-6 text-[#E84A27] mx-auto mb-2" />
+                        <p className="font-medium text-slate-200">Replit DB / Neon</p>
+                        <p className="text-xs text-slate-400 mt-1">Managed storage</p>
+                      </div>
+                      <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center relative">
+                        <div className="absolute -top-3 left-4 bg-slate-800 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Assets</div>
+                        <Cloud className="w-6 h-6 text-[#E84A27] mx-auto mb-2" />
+                        <p className="font-medium text-slate-200">Object Storage</p>
+                        <p className="text-xs text-slate-400 mt-1">Built-in buckets</p>
                       </div>
                     </div>
                   </div>
@@ -259,37 +236,60 @@ export default function MigrationPlanner() {
 
             </div>
 
-            <Card>
+            <Card className="bg-slate-900 border-slate-800">
               <CardHeader>
-                <CardTitle>Architecture Trade-offs</CardTitle>
+                <CardTitle className="text-slate-100">Comprehensive Comparison</CardTitle>
+                <CardDescription className="text-slate-400">Architecture, Lock-in, and Use Cases</CardDescription>
               </CardHeader>
               <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-1/3">Feature</TableHead>
-                      <TableHead>Lovable + Supabase</TableHead>
-                      <TableHead>Replit</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-medium">Development Flow</TableCell>
-                      <TableCell>Local IDE or Lovable UI {'->'} Git {'->'} CI/CD</TableCell>
-                      <TableCell>Browser IDE {'->'} Direct Deploy</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">Backend Logic</TableCell>
-                      <TableCell>Postgres Functions + Edge Functions (Deno)</TableCell>
-                      <TableCell>Full Node.js/Python server (Express, FastAPI)</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">Scalability</TableCell>
-                      <TableCell>Serverless scaling, connection pooling built-in</TableCell>
-                      <TableCell>VM scaling (requires configuration for high traffic)</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-slate-800 hover:bg-transparent">
+                        <TableHead className="w-1/4 text-slate-400">Feature / Aspect</TableHead>
+                        <TableHead className="w-3/8 text-blue-400">Lovable + Supabase</TableHead>
+                        <TableHead className="w-3/8 text-[#E84A27]">Replit</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-300">Development Flow</TableCell>
+                        <TableCell className="text-slate-400">Local IDE or Lovable UI {'->'} Git {'->'} CI/CD</TableCell>
+                        <TableCell className="text-slate-400">Browser IDE {'->'} Direct Deploy</TableCell>
+                      </TableRow>
+                      <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-300">Backend Logic</TableCell>
+                        <TableCell className="text-slate-400">Postgres Functions + Edge Functions (Deno)</TableCell>
+                        <TableCell className="text-slate-400">Full Node.js/Python server (Express, FastAPI)</TableCell>
+                      </TableRow>
+                      <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-300">Scalability</TableCell>
+                        <TableCell className="text-slate-400">Serverless scaling, connection pooling built-in</TableCell>
+                        <TableCell className="text-slate-400">VM scaling (requires configuration for high traffic)</TableCell>
+                      </TableRow>
+                      <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-300">Frontend Lock-in</TableCell>
+                        <TableCell className="text-slate-400"><span className="text-emerald-400 font-semibold">Zero:</span> Standard React/Vite code, deploy anywhere.</TableCell>
+                        <TableCell className="text-slate-400"><span className="text-amber-400 font-semibold">Low:</span> Code is exportable, but deployment setup is Replit-specific.</TableCell>
+                      </TableRow>
+                      <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-300">Database Lock-in</TableCell>
+                        <TableCell className="text-slate-400"><span className="text-emerald-400 font-semibold">Low:</span> Standard PostgreSQL, easy to dump and self-host.</TableCell>
+                        <TableCell className="text-slate-400"><span className="text-amber-400 font-semibold">Medium:</span> Replit DB requires custom extraction. Neon is standard but billed via Replit.</TableCell>
+                      </TableRow>
+                      <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-300">Auth Lock-in</TableCell>
+                        <TableCell className="text-slate-400"><span className="text-amber-400 font-semibold">Medium:</span> GoTrue is open-source, but migrating password hashes is complex.</TableCell>
+                        <TableCell className="text-slate-400"><span className="text-emerald-400 font-semibold">Low:</span> If using custom auth (Passport.js), you own it. High if using Replit Auth.</TableCell>
+                      </TableRow>
+                      <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-300">Best For...</TableCell>
+                        <TableCell className="text-slate-400">Production-ready apps, relational data, decoupled architecture, zero frontend lock-in.</TableCell>
+                        <TableCell className="text-slate-400">Fastest prototyping, custom backend servers (Python/AI), all-in-one browser workspace.</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -299,16 +299,16 @@ export default function MigrationPlanner() {
             <div className="grid lg:grid-cols-3 gap-6">
               
               {/* Controls */}
-              <Card className="lg:col-span-1">
+              <Card className="lg:col-span-1 bg-slate-900 border-slate-800">
                 <CardHeader>
-                  <CardTitle>Usage Parameters</CardTitle>
-                  <CardDescription>Adjust sliders to see cost impact</CardDescription>
+                  <CardTitle className="text-slate-100">Usage Parameters</CardTitle>
+                  <CardDescription className="text-slate-400">Adjust sliders to see cost impact</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-8">
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <Label className="text-base font-semibold">Monthly Active Users</Label>
-                      <span className="font-mono text-sm bg-slate-100 px-2 py-1 rounded">{(mau[0] || 1000).toLocaleString()}</span>
+                      <Label className="text-base font-semibold text-slate-200">Monthly Active Users</Label>
+                      <span className="font-mono text-sm bg-slate-800 text-slate-300 px-2 py-1 rounded">{(mau[0] || 1000).toLocaleString()}</span>
                     </div>
                     <Slider 
                       value={mau} 
@@ -316,15 +316,15 @@ export default function MigrationPlanner() {
                       min={1000}
                       max={1000000} 
                       step={1000}
-                      className="py-4"
+                      className="py-4 [&_[role=slider]]:bg-blue-500 [&_[role=slider]]:border-blue-500"
                     />
                     <p className="text-xs text-slate-500">Affects compute, bandwidth, and auth limits.</p>
                   </div>
 
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <Label className="text-base font-semibold">Database Size (GB)</Label>
-                      <span className="font-mono text-sm bg-slate-100 px-2 py-1 rounded">{dbSize[0] || 0.5} GB</span>
+                      <Label className="text-base font-semibold text-slate-200">Database Size (GB)</Label>
+                      <span className="font-mono text-sm bg-slate-800 text-slate-300 px-2 py-1 rounded">{dbSize[0] || 0.5} GB</span>
                     </div>
                     <Slider 
                       value={dbSize} 
@@ -332,14 +332,14 @@ export default function MigrationPlanner() {
                       min={0.5}
                       max={100} 
                       step={0.5}
-                      className="py-4"
+                      className="py-4 [&_[role=slider]]:bg-blue-500 [&_[role=slider]]:border-blue-500"
                     />
                   </div>
 
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <Label className="text-base font-semibold">Storage (GB)</Label>
-                      <span className="font-mono text-sm bg-slate-100 px-2 py-1 rounded">{storage[0] || 1} GB</span>
+                      <Label className="text-base font-semibold text-slate-200">Storage (GB)</Label>
+                      <span className="font-mono text-sm bg-slate-800 text-slate-300 px-2 py-1 rounded">{storage[0] || 1} GB</span>
                     </div>
                     <Slider 
                       value={storage} 
@@ -347,7 +347,7 @@ export default function MigrationPlanner() {
                       min={1}
                       max={500} 
                       step={1}
-                      className="py-4"
+                      className="py-4 [&_[role=slider]]:bg-blue-500 [&_[role=slider]]:border-blue-500"
                     />
                   </div>
                 </CardContent>
@@ -356,14 +356,14 @@ export default function MigrationPlanner() {
               {/* Results & Chart */}
               <div className="lg:col-span-2 space-y-6">
                 <div className="grid grid-cols-2 gap-4">
-                  <Card className="bg-[#13294B]/5 border-[#13294B]/20">
+                  <Card className="bg-blue-950/20 border-blue-500/20">
                     <CardContent className="p-6 flex flex-col justify-center items-center text-center h-full">
-                      <p className="text-sm font-medium text-[#13294B] mb-2">Lovable + Supabase</p>
-                      <div className="text-4xl font-bold text-[#13294B]">${currentCosts.lovable}</div>
-                      <p className="text-xs text-[#13294B]/70 mt-2">per month</p>
+                      <p className="text-sm font-medium text-blue-400 mb-2">Lovable + Supabase</p>
+                      <div className="text-4xl font-bold text-blue-300">${currentCosts.lovable}</div>
+                      <p className="text-xs text-blue-400/70 mt-2">per month</p>
                     </CardContent>
                   </Card>
-                  <Card className="bg-[#E84A27]/5 border-[#E84A27]/20">
+                  <Card className="bg-[#E84A27]/10 border-[#E84A27]/20">
                     <CardContent className="p-6 flex flex-col justify-center items-center text-center h-full">
                       <p className="text-sm font-medium text-[#E84A27] mb-2">Replit</p>
                       <div className="text-4xl font-bold text-[#E84A27]">${currentCosts.replit}</div>
@@ -372,10 +372,10 @@ export default function MigrationPlanner() {
                   </Card>
                 </div>
 
-                <Card>
+                <Card className="bg-slate-900 border-slate-800">
                   <CardHeader>
-                    <CardTitle>Cost Scaling</CardTitle>
-                    <CardDescription>Estimated monthly cost as your user base grows</CardDescription>
+                    <CardTitle className="text-slate-100">Cost Scaling</CardTitle>
+                    <CardDescription className="text-slate-400">Estimated monthly cost as your user base grows</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="h-[300px] w-full">
@@ -383,24 +383,25 @@ export default function MigrationPlanner() {
                         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                           <defs>
                             <linearGradient id="colorLovable" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#13294B" stopOpacity={0.3}/>
-                              <stop offset="95%" stopColor="#13294B" stopOpacity={0}/>
+                              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
                             </linearGradient>
                             <linearGradient id="colorReplit" x1="0" y1="0" x2="0" y2="1">
                               <stop offset="5%" stopColor="#E84A27" stopOpacity={0.3}/>
                               <stop offset="95%" stopColor="#E84A27" stopOpacity={0}/>
                             </linearGradient>
                           </defs>
-                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                          <XAxis dataKey="name" tick={{fontSize: 12}} tickLine={false} axisLine={false} />
-                          <YAxis tickFormatter={(value) => `$${value}`} tick={{fontSize: 12}} tickLine={false} axisLine={false} />
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
+                          <XAxis dataKey="name" tick={{fontSize: 12, fill: '#94a3b8'}} tickLine={false} axisLine={false} />
+                          <YAxis tickFormatter={(value) => `$${value}`} tick={{fontSize: 12, fill: '#94a3b8'}} tickLine={false} axisLine={false} />
                           <Tooltip 
                             formatter={(value) => [`$${value}`, '']}
                             labelFormatter={(label) => `${label} Users`}
-                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                            contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', color: '#f1f5f9', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.5)' }}
+                            itemStyle={{ color: '#f1f5f9' }}
                           />
-                          <Legend verticalAlign="top" height={36} iconType="circle" />
-                          <Area type="monotone" dataKey="Lovable + Supabase" stroke="#13294B" strokeWidth={2} fillOpacity={1} fill="url(#colorLovable)" />
+                          <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ color: '#cbd5e1' }} />
+                          <Area type="monotone" dataKey="Lovable + Supabase" stroke="#3b82f6" strokeWidth={2} fillOpacity={1} fill="url(#colorLovable)" />
                           <Area type="monotone" dataKey="Replit" stroke="#E84A27" strokeWidth={2} fillOpacity={1} fill="url(#colorReplit)" />
                         </AreaChart>
                       </ResponsiveContainer>
@@ -410,177 +411,21 @@ export default function MigrationPlanner() {
               </div>
             </div>
           </TabsContent>
-
-          {/* LOCK-IN TAB */}
-          <TabsContent value="lockin" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Vendor Lock-in Analysis</CardTitle>
-                <CardDescription>How easy is it to move away from the platform?</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Accordion type="single" collapsible className="w-full" defaultValue={["code"]}>
-                  
-                  <AccordionItem value="code">
-                    <AccordionTrigger className="hover:no-underline">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-slate-100 rounded-md"><Code className="w-4 h-4 text-slate-700" /></div>
-                        <span className="font-semibold">Code & Frontend</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-4 pb-6">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <h4 className="font-medium text-[#13294B] flex items-center gap-2">
-                            <Unlock className="w-4 h-4" /> Lovable
-                          </h4>
-                          <p className="text-sm text-slate-600">
-                            Lovable generates standard React/Vite/Tailwind code. You can push it to GitHub and deploy it anywhere (Vercel, Netlify, AWS). <strong>Zero lock-in</strong> on the frontend code.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="font-medium text-[#E84A27] flex items-center gap-2">
-                            <Unlock className="w-4 h-4" /> Replit
-                          </h4>
-                          <p className="text-sm text-slate-600">
-                            Replit workspaces can be linked to GitHub. You can export your code at any time. However, if you rely heavily on Replit-specific environment variables or Nix configurations, you may need to recreate your Docker/deployment setup elsewhere.
-                          </p>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-
-                  <AccordionItem value="database">
-                    <AccordionTrigger className="hover:no-underline">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-slate-100 rounded-md"><Database className="w-4 h-4 text-slate-700" /></div>
-                        <span className="font-semibold">Database & Data</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-4 pb-6">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <h4 className="font-medium text-[#13294B] flex items-center gap-2">
-                            <Unlock className="w-4 h-4" /> Supabase
-                          </h4>
-                          <p className="text-sm text-slate-600">
-                            Supabase is built on standard PostgreSQL. You can dump your database at any time using standard `pg_dump`. Supabase itself is open-source and can be self-hosted via Docker if you want to leave their managed cloud. <strong>Low lock-in.</strong>
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="font-medium text-[#E84A27] flex items-center gap-2">
-                            <Lock className="w-4 h-4" /> Replit DB / Neon
-                          </h4>
-                          <p className="text-sm text-slate-600">
-                            If using Replit's native Key-Value DB, migration requires writing a custom script to extract data. If using their Neon Postgres integration, you have standard Postgres access, but the billing and connection management is tied to Replit. <strong>Medium lock-in.</strong>
-                          </p>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-
-                  <AccordionItem value="auth">
-                    <AccordionTrigger className="hover:no-underline">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-slate-100 rounded-md"><ShieldCheck className="w-4 h-4 text-slate-700" /></div>
-                        <span className="font-semibold">Authentication</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-4 pb-6">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <h4 className="font-medium text-[#13294B] flex items-center gap-2">
-                            <Lock className="w-4 h-4" /> Supabase Auth
-                          </h4>
-                          <p className="text-sm text-slate-600">
-                            Supabase Auth uses GoTrue. While open-source, migrating users (especially passwords) to another provider like Auth0 or Firebase requires careful export/import of password hashes. <strong>Medium lock-in.</strong>
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="font-medium text-[#E84A27] flex items-center gap-2">
-                            <Unlock className="w-4 h-4" /> Replit Auth
-                          </h4>
-                          <p className="text-sm text-slate-600">
-                            Replit provides built-in Replit Auth (login with Replit). If you use this, you are heavily locked in. However, most production Replit apps implement their own auth (e.g., Passport.js, NextAuth), which means you own the auth logic and can move it easily.
-                          </p>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-
-                </Accordion>
-              </CardContent>
-            </Card>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="bg-[#13294B]/5 border-[#13294B]/20">
-                <CardHeader>
-                  <CardTitle className="text-[#13294B] text-lg">When to choose Lovable + Supabase</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm text-slate-800">
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#13294B] shrink-0" />
-                      You want a production-ready, scalable relational database from day one.
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#13294B] shrink-0" />
-                      You prefer a decoupled architecture (separate frontend and backend).
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#13294B] shrink-0" />
-                      You want to utilize Row Level Security (RLS) to handle authorization at the database level.
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#13294B] shrink-0" />
-                      You prioritize having zero lock-in on your frontend codebase.
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-[#E84A27]/5 border-[#E84A27]/20">
-                <CardHeader>
-                  <CardTitle className="text-[#E84A27] text-lg">When to choose Replit</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm text-slate-800">
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#E84A27] shrink-0" />
-                      You want the absolute fastest time-to-market for a full-stack prototype.
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#E84A27] shrink-0" />
-                      You need a custom backend server (e.g., Python for AI/ML, complex Node.js logic) that serverless functions can't handle.
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#E84A27] shrink-0" />
-                      You want to code, build, and deploy entirely from your browser without local setup.
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#E84A27] shrink-0" />
-                      You prefer having everything (code, DB, hosting) billed and managed in one single platform.
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
         </Tabs>
       </div>
       </main>
 
       {/* University Footer */}
-      <footer className="bg-[#13294B] text-white py-6 mt-auto border-t-4 border-[#E84A27]">
+      <footer className="bg-slate-900 text-slate-400 py-6 mt-auto border-t-2 border-[#E84A27]">
         <div className="max-w-6xl mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-blue-200">
+          <div className="text-sm">
             <p>&copy; {new Date().getFullYear()} University of Illinois at Urbana-Champaign</p>
             <p className="mt-1">IlliniXchange Development Team</p>
           </div>
-          <div className="flex gap-4 text-sm text-blue-200">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Contact Support</a>
+          <div className="flex gap-4 text-sm">
+            <a href="#" className="hover:text-slate-200 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-slate-200 transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-slate-200 transition-colors">Contact Support</a>
           </div>
         </div>
       </footer>
